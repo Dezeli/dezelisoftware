@@ -43,6 +43,7 @@ db.sqlite3-journal
 
 # Media & Static
 media/
+back/media/
 static/
 
 # Database
