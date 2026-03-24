@@ -6,6 +6,16 @@ class Skill(models.Model):
     def __str__(self):
         return self.name
 
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return self.name
+
 class Profile(models.Model):
     name = models.CharField(max_length=50)
     slogan = models.CharField(max_length=200)
@@ -39,7 +49,7 @@ class Project(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
-    category = models.CharField(max_length=50)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='posts')
     content = models.TextField()
     is_published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

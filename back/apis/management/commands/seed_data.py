@@ -1,23 +1,22 @@
+# back/apis/management/commands/seed_data.py
 from django.core.management.base import BaseCommand
 from django.core.files.uploadedfile import SimpleUploadedFile
-from apis.models import Skill, Profile, Project, Post
+from apis.models import Skill, Profile, Project, Post, Category
 
 class Command(BaseCommand):
     help = '포트폴리오 및 블로그 테스트용 더미 데이터를 생성합니다.'
 
     def handle(self, *args, **kwargs):
-        # 1. 1x1 투명 GIF 더미 이미지 바이트 코드 (URL 호출 에러 방어용)
         tiny_gif = b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\xff\xff\xff\x00\x00\x00\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3b'
         dummy_img = SimpleUploadedFile(name='dummy.gif', content=tiny_gif, content_type='image/gif')
 
-        # 2. 기존 데이터 초기화 (중복 생성 방지)
         self.stdout.write("기존 데이터를 삭제 중...")
         Skill.objects.all().delete()
         Profile.objects.all().delete()
         Project.objects.all().delete()
         Post.objects.all().delete()
+        Category.objects.all().delete()
 
-        # 3. 기술 스택 (Skill) 생성
         skill_names = [
             'Django', 'React', 'React Native', 'PostgreSQL', 
             'Docker', 'Nginx', 'FastAPI', 'AWS EC2', 'Spring Boot'
@@ -26,7 +25,6 @@ class Command(BaseCommand):
         for name in skill_names:
             skills[name] = Skill.objects.create(name=name)
 
-        # 4. 프로필 (Profile) 생성
         profile = Profile.objects.create(
             name='민성',
             slogan='매일매일 성장하려고 애쓰는 백엔드 중심 프론트엔드 가능한 프리랜서 개발자',
@@ -37,7 +35,6 @@ class Command(BaseCommand):
         )
         profile.skills.set(list(skills.values()))
 
-        # 5. 프로젝트 (Project) 7개 생성
         project_data = [
             ("이커머스 결제 API 연동", "가상 결제 모듈을 연동한 백엔드 시스템 구축", ['Django', 'PostgreSQL']),
             ("실시간 채팅 웹 애플리케이션", "WebSocket을 활용한 실시간 채팅 서비스", ['FastAPI', 'React']),
@@ -60,7 +57,11 @@ class Command(BaseCommand):
             proj_skills = [skills[name] for name in stack_names if name in skills]
             proj.tech_stacks.set(proj_skills)
 
-        # 6. 블로그 포스트 (Post) 7개 생성
+        category_names = ['Backend', 'Frontend', 'DevOps', 'Database', 'Infra', 'Life']
+        categories = {}
+        for idx, name in enumerate(category_names):
+            categories[name] = Category.objects.create(name=name, order=idx)
+
         post_data = [
             ("Django N+1 쿼리 최적화 경험기", "Backend", "<p>prefetch_related를 활용하여 DB 호출을 줄인 경험을 공유합니다.</p>"),
             ("React 컴포넌트 라이프사이클의 이해", "Frontend", "<p>useEffect의 올바른 사용법과 메모리 누수 방지 팁입니다.</p>"),
@@ -71,10 +72,10 @@ class Command(BaseCommand):
             ("프리랜서 개발자로서의 첫해 회고", "Life", "<p>매일 성장하기 위해 어떤 루틴을 지켜왔는지 정리해보았습니다.</p>")
         ]
 
-        for title, category, content in post_data:
+        for title, cat_name, content in post_data:
             Post.objects.create(
                 title=title,
-                category=category,
+                category=categories[cat_name],
                 content=content,
                 is_published=True
             )
