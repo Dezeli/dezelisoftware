@@ -1,7 +1,18 @@
-django
-django-ninja
-django-cors-headers
-psycopg2-binary
-python-dotenv
-psutil
-pillow
+# Web Framework & API
+django>=4.2,<5.0
+django-ninja>=1.1.0
+django-environ>=0.11.2
+django-cors-headers>=4.3.1
+
+# Production Server (ASGI/WSGI)
+gunicorn>=21.2.0
+uvicorn[standard]>=0.27.0
+
+# Database Adapter
+psycopg2-binary>=2.9.9
+
+# Utilities & System
+python-dotenv          # 추가: .env 파일 로드용
+psutil                 # 추가: 시스템 프로세스/리소스 모니터링용
+pillow                 # 추가: 이미지 필드 및 처리용
+python-dateutil>=2.8.2
