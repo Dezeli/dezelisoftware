@@ -8,7 +8,7 @@ from ninja.errors import ValidationError
 from django.http import Http404
 
 api = NinjaAPI()
-api.add_router("/apis/", apis_router)
+api.add_router("", apis_router)
 
 @api.exception_handler(Http404)
 def not_found_handler(request, exc):
