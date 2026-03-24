@@ -19,7 +19,7 @@ services:
         container_name: dezelisoftware_api
         env_file:
             - back/.env.prod
-        command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000 -k uvicorn.workers.UvicornWorker
+        command: gunicorn backend.asgi:application --bind 0.0.0.0:8000 -k uvicorn.workers.UvicornWorker
         volumes:
             - ./back:/app
             - static_volume:/app/static
