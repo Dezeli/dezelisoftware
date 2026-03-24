@@ -4,7 +4,10 @@
 # Environment variables
 # =========================
 .env
+.env.prod
 .env/
+.env.development
+.env.production
 
 # =========================
 # Backend (Django/Python)
