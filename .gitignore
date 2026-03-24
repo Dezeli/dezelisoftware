@@ -1,3 +1,14 @@
+# dezelisoftware/.gitignore
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env/
+
+# =========================
+# Backend (Django/Python)
+# =========================
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -10,7 +21,6 @@ __pycache__/
 bin/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -30,13 +40,11 @@ MANIFEST
 venv/
 .venv/
 env/
-.env/
 ENV/
 env.bak/
 venv.bak/
 
 # Django 관련
-*.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -50,7 +58,34 @@ static/
 *.sql
 *.dump
 
-# OS 및 에디터 설정
+# =========================
+# Frontend (React/Vite/Node)
+# =========================
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+dist-ssr/
+
+# Logs (Node package managers)
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Vite environment
+*.local
+
+# =========================
+# General (OS, Editor, Logs)
+# =========================
+# Logs
+*.log
+
+# OS files
 .DS_Store
 .DS_Store?
 ._*
@@ -58,8 +93,13 @@ static/
 .Trashes
 ehthumbs.db
 Thumbs.db
-.vscode/
-.idea/
 
-# Environment variables
-.env
+# Editor directories and files
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
