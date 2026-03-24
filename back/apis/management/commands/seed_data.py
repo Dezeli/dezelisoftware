@@ -2,6 +2,7 @@
 from django.core.management.base import BaseCommand
 from django.core.files.uploadedfile import SimpleUploadedFile
 from apis.models import Skill, Profile, Project, Post, Category
+from datetime import date
 
 class Command(BaseCommand):
     help = '포트폴리오 및 블로그 테스트용 더미 데이터를 생성합니다.'
@@ -19,7 +20,8 @@ class Command(BaseCommand):
 
         skill_names = [
             'Django', 'React', 'React Native', 'PostgreSQL', 
-            'Docker', 'Nginx', 'FastAPI', 'AWS EC2', 'Spring Boot'
+            'Docker', 'Nginx', 'FastAPI', 'AWS EC2', 'Spring Boot',
+            'Ubuntu'
         ]
         skills = {}
         for name in skill_names:
@@ -36,20 +38,22 @@ class Command(BaseCommand):
         profile.skills.set(list(skills.values()))
 
         project_data = [
-            ("이커머스 결제 API 연동", "가상 결제 모듈을 연동한 백엔드 시스템 구축", ['Django', 'PostgreSQL']),
-            ("실시간 채팅 웹 애플리케이션", "WebSocket을 활용한 실시간 채팅 서비스", ['FastAPI', 'React']),
-            ("개인 포트폴리오 웹사이트", "현재 보시는 바로 이 웹사이트입니다.", ['Django', 'React', 'Nginx']),
-            ("사내 인트라넷 모바일 앱", "출퇴근 기록 및 연차 관리용 사내 앱", ['React Native', 'Spring Boot']),
-            ("자동화 배포 파이프라인 구축", "GitHub Actions를 활용한 서버 자동 배포", ['Docker', 'AWS EC2']),
-            ("크롤링 데이터 분석 대시보드", "수집된 공공 데이터를 시각화하는 플랫폼", ['Django', 'PostgreSQL']),
-            ("로컬 홈 서버 아키텍처 설계", "클라우드 비용 절감을 위한 홈 서버 네트워크 세팅", ['Ubuntu', 'Nginx', 'Docker'])
+            ("이커머스 결제 API 연동", "가상 결제 모듈을 연동한 백엔드 시스템 구축", ['Django', 'PostgreSQL'], date(2025, 1, 15), date(2025, 2, 28)),
+            ("실시간 채팅 웹 애플리케이션", "WebSocket을 활용한 실시간 채팅 서비스", ['FastAPI', 'React'], date(2025, 3, 1), date(2025, 4, 15)),
+            ("개인 포트폴리오 웹사이트", "현재 보시는 바로 이 웹사이트입니다.", ['Django', 'React', 'Nginx'], date(2026, 3, 1), None), # 진행 중
+            ("사내 인트라넷 모바일 앱", "출퇴근 기록 및 연차 관리용 사내 앱", ['React Native', 'Spring Boot'], date(2024, 11, 1), date(2025, 1, 10)),
+            ("자동화 배포 파이프라인 구축", "GitHub Actions를 활용한 서버 자동 배포", ['Docker', 'AWS EC2'], date(2025, 5, 20), date(2025, 6, 5)),
+            ("크롤링 데이터 분석 대시보드", "수집된 공공 데이터를 시각화하는 플랫폼", ['Django', 'PostgreSQL'], date(2025, 8, 1), date(2025, 10, 30)),
+            ("로컬 홈 서버 아키텍처 설계", "클라우드 비용 절감을 위한 홈 서버 네트워크 세팅", ['Ubuntu', 'Nginx', 'Docker'], date(2026, 2, 1), date(2026, 3, 14))
         ]
 
-        for idx, (title, desc, stack_names) in enumerate(project_data):
+        for idx, (title, desc, stack_names, s_date, e_date) in enumerate(project_data):
             proj = Project.objects.create(
                 title=title,
                 thumbnail=dummy_img,
                 description=desc,
+                start_date=s_date,
+                end_date=e_date,
                 github_url=f"https://github.com/minseong/project-{idx}",
                 is_public=True,
                 order=idx
@@ -80,4 +84,4 @@ class Command(BaseCommand):
                 is_published=True
             )
 
-        self.stdout.write(self.style.SUCCESS('더미 데이터 주입이 완벽하게 완료되었습니다!'))
+        self.stdout.write(self.style.SUCCESS('날짜 데이터가 포함된 더미 데이터 주입이 완벽하게 완료되었습니다!'))

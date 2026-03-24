@@ -20,6 +20,7 @@ def get_profile(request):
 @router.get("/projects", response=ApiResponse[PaginatedData[ProjectSchema]])
 def list_projects(request, skill: Optional[str] = None, page: int = 1):
     qs = Project.objects.filter(is_public=True).prefetch_related('tech_stacks')
+    
     if skill:
         qs = qs.filter(tech_stacks__name__iexact=skill)
     
@@ -38,16 +39,17 @@ def list_projects(request, skill: Optional[str] = None, page: int = 1):
 @router.get("/projects/{project_id}", response=ApiResponse[ProjectDetailSchema])
 def get_project_detail(request, project_id: int):
     project = get_object_or_404(Project, id=project_id, is_public=True)
-    
     prev_projects = Project.objects.filter(
-        is_public=True, 
-        created_at__lt=project.created_at
-    ).order_by('-created_at')[:2]
+        is_public=True
+    ).exclude(id=project.id).filter(
+        order__lte=project.order
+    ).order_by('-order', 'created_at')[:2]
     
     next_projects = Project.objects.filter(
-        is_public=True, 
-        created_at__gt=project.created_at
-    ).order_by('created_at')[:2]
+        is_public=True
+    ).exclude(id=project.id).filter(
+        order__gte=project.order
+    ).order_by('order', '-created_at')[:2]
 
     project.previous_projects = list(prev_projects)
     project.next_projects = list(next_projects)
@@ -79,19 +81,15 @@ def list_posts(request, category: Optional[str] = None, page: int = 1):
 @router.get("/posts/{post_id}", response=ApiResponse[PostDetailSchema])
 def get_post_detail(request, post_id: int):
     post = get_object_or_404(Post.objects.select_related('category'), id=post_id, is_published=True)
-    
-    prev_posts = Post.objects.filter(
-        is_published=True, 
-        created_at__lt=post.created_at
-    ).order_by('-created_at')[:2]
-    
-    next_posts = Post.objects.filter(
-        is_published=True, 
-        created_at__gt=post.created_at
-    ).order_by('created_at')[:2]
+    related_qs = Post.objects.filter(is_published=True).select_related('category')
 
-    post.previous_posts = list(prev_posts)
-    post.next_posts = list(next_posts)
+    post.previous_posts = list(related_qs.filter(
+        created_at__lt=post.created_at
+    ).order_by('-created_at')[:2])
+    
+    post.next_posts = list(related_qs.filter(
+        created_at__gt=post.created_at
+    ).order_by('created_at')[:2])
     
     return {
         "success": True,
