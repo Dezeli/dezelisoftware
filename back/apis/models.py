@@ -1,4 +1,12 @@
+import os
+import uuid
 from django.db import models
+
+def get_file_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = f"{uuid.uuid4()}.{ext}"
+    return os.path.join('profile/%Y/%m/', filename)
+
 
 class Skill(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -19,8 +27,8 @@ class Category(models.Model):
 class Profile(models.Model):
     name = models.CharField(max_length=50)
     slogan = models.CharField(max_length=200)
-    profile_image = models.ImageField(upload_to='profile/%Y/%m/')
-    logo_image = models.ImageField(upload_to='logo/%Y/%m/')
+    profile_image = models.ImageField(upload_to=get_file_path, null=True, blank=True)
+    logo_image = models.ImageField(upload_to=get_file_path, null=True, blank=True)
     introduction = models.TextField()
     contact_email = models.EmailField()
     skills = models.ManyToManyField(Skill, related_name='profiles', blank=True)
@@ -32,12 +40,14 @@ class Profile(models.Model):
 
 class Project(models.Model):
     title = models.CharField(max_length=100)
-    thumbnail = models.ImageField(upload_to='projects/%Y/%m/')
+    thumbnail = models.ImageField(upload_to=get_file_path, null=True, blank=True)
     description = models.TextField()
     github_url = models.URLField(blank=True, null=True)
     is_public = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
     tech_stacks = models.ManyToManyField(Skill, related_name='projects', blank=True)
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
