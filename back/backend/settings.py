@@ -73,6 +73,11 @@ else:
         "https://dezelisoftware.com",
         "https://www.dezelisoftware.com"
     ]
+    CSRF_TRUSTED_ORIGINS = [
+        "https://dezelisoftware.com",
+        "https://www.dezelisoftware.com",
+    ]
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 AUTH_PASSWORD_VALIDATORS = [
