@@ -97,7 +97,7 @@ export default function Home() {
                 <div className="w-full md:w-1/3 shrink-0 flex justify-center md:justify-end">
                     {profile.profile_image && (
                         /* 로고 보더와 높이를 맞추기 위해 상단 마진 미세 조정 // 추가 */
-                        <div className="relative aspect-square w-full max-w-[280px] rounded-3xl bg-zinc-900 border-2 border-zinc-700 shadow-2xl overflow-hidden md:-mt-1"> 
+                        <div className="relative aspect-square w-full max-w-[280px] rounded-3xl bg-zinc-900 border-2 border-zinc-700 shadow-2xl overflow-hidden md:pt-2"> 
                             <img
                                 src={profile.profile_image}
                                 alt={profile.name}
