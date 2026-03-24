@@ -62,7 +62,7 @@ def get_project_detail(request, project_id: int):
 def list_posts(request, category: Optional[str] = None, page: int = 1):
     qs = Post.objects.filter(is_published=True)
     if category:
-        qs = qs.filter(category__iexact=category)
+        qs = qs.filter(category__name__iexact=category)
         
     paginator = Paginator(qs, 9)
     page_obj = paginator.get_page(page)
