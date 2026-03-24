@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Skill, Profile, Project, Post
+from .models import Skill, Profile, Project, Post, Category
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
@@ -28,4 +28,5 @@ class ProfileAdmin(admin.ModelAdmin):
     profile_preview.short_description = '프로필 이미지'
 
 admin.site.register(Skill)
+admin.site.register(Category)
 admin.site.register(Post)
