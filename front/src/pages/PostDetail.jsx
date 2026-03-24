@@ -15,71 +15,133 @@ export default function PostDetail() {
             setLoading(true)
             try {
                 const response = await axiosInstance.get(`/posts/${id}`)
-                if (response.success) {
-                    setPost(response.data)
-                } else {
-                    setError(response.message)
-                }
+                const data = response.data || response
+                setPost(data)
             } catch (err) {
                 setError('블로그 글을 불러오는데 실패했습니다.')
             } finally {
                 setLoading(false)
             }
         }
-        
         fetchPostDetail()
+        window.scrollTo(0, 0)
     }, [id])
 
-    if (loading) return <div>로딩 중...</div>
-    if (error) return <div>에러: {error}</div>
-    if (!post) return <div>데이터가 없습니다.</div>
+    if (loading) return (
+        <div className="flex items-center justify-center py-60">
+            <div className="flex items-center gap-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-bounce [animation-delay:0ms]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-bounce [animation-delay:150ms]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-bounce [animation-delay:300ms]" />
+            </div>
+        </div>
+    )
+
+    if (error) return (
+        <div className="flex items-center justify-center py-40 text-red-400 text-sm font-mono font-['Pretendard']">
+            {error}
+        </div>
+    )
+
+    if (!post) return null
 
     return (
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-            <button onClick={() => navigate('/posts')} style={{ marginBottom: '20px' }}>
-                목록으로 돌아가기
+        <div className="max-w-2xl mx-auto space-y-12 font-['Pretendard']">
+
+            <button
+                onClick={() => navigate('/posts')}
+                className="flex items-center gap-2 text-sm font-bold text-zinc-500 hover:text-white transition-all font-['NanumBarunPen'] group"
+            >
+                <span className="group-hover:-translate-x-1 transition-transform">←</span>
+                Back to Blog
             </button>
 
-            <h1 style={{ marginBottom: '10px' }}>{post.title}</h1>
-            
-            <div style={{ display: 'flex', gap: '15px', color: '#666', marginBottom: '30px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
-                <span style={{ fontWeight: 'bold', color: '#007bff' }}>{post.category.name}</span>
-                <span>{new Date(post.created_at).toLocaleDateString('ko-KR')}</span>
-            </div>
+            <header className="space-y-6">
+                <div className="flex items-center justify-between border-b border-zinc-800/60 pb-4">
+                    <span className="px-3 py-0.5 bg-zinc-900 border border-zinc-800 text-cyan-400 rounded-md text-[10px] font-mono uppercase tracking-widest">
+                        {post.category?.name}
+                    </span>
+                    <span className="text-[11px] font-mono text-zinc-500 uppercase">
+                        {new Date(post.created_at).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                    </span>
+                </div>
 
-            <div 
-                style={{ lineHeight: '1.6', fontSize: '1.1em', marginBottom: '50px' }}
+                <h1 className="text-3xl md:text-5xl font-bold text-white font-['NanumBarunPen'] leading-[1.2] tracking-tight">
+                    {post.title}
+                </h1>
+            </header>
+
+            <article
+                className="
+                    mt-4 
+                    prose prose-invert prose-zinc max-w-none
+                    prose-headings:font-['NanumBarunPen'] prose-headings:font-bold prose-headings:tracking-tight
+                    prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
+                    prose-p:text-zinc-300 prose-p:leading-[1.7] prose-p:text-lg prose-p:mt-6
+                    prose-strong:text-emerald-400
+                    prose-code:text-cyan-300 prose-code:bg-zinc-900/80 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-lg prose-code:before:content-none prose-code:after:content-none
+                    prose-pre:bg-zinc-900/50 prose-pre:border prose-pre:border-zinc-800 prose-pre:rounded-2xl prose-pre:p-6
+                    prose-blockquote:border-l-cyan-500 prose-blockquote:bg-zinc-900/30 prose-blockquote:italic
+                    prose-img:rounded-3xl prose-img:border-2 prose-img:border-zinc-800
+                    prose-li:text-zinc-300 prose-li:marker:text-emerald-500
+                "
                 dangerouslySetInnerHTML={{ __html: post.content }}
             />
 
-            <hr style={{ margin: '40px 0' }} />
+            {(post.previous_posts?.length > 0 || post.next_posts?.length > 0) && (
+                <div className="pt-12 space-y-8">
+                    <div className="h-px bg-zinc-800/60" />
+                    <nav className="grid grid-cols-1 sm:grid-cols-2 gap-6 font-['NanumBarunPen']">
+                        {post.previous_posts?.[0] ? (
+                            <Link
+                                to={`/posts/${post.previous_posts[0].id}`}
+                                className="group block p-6 bg-zinc-900/40 border-2 border-zinc-800 hover:border-emerald-500/40 rounded-3xl transition-all"
+                            >
+                                <div className="flex justify-between items-center mb-1.5">
+                                    <p className="text-[13px] font-black text-emerald-500 uppercase tracking-widest flex items-center gap-1.5">
+                                        <span className="text-lg group-hover:-translate-x-1 transition-transform">←</span> 
+                                        PREVIOUS
+                                    </p>
+                                    <span className="text-[10px] font-mono text-zinc-600">
+                                        {new Date(post.previous_posts[0].created_at).toLocaleDateString('ko-KR')}
+                                    </span>
+                                </div>
+                                
+                                <h4 className="text-xl font-bold text-zinc-200 group-hover:text-white leading-snug font-['Pretendard']">
+                                    <span className="inline-block align-middle mr-2 px-1.5 py-0.5 bg-zinc-900 border border-zinc-800 text-cyan-400 rounded text-[9px] font-mono uppercase tracking-tighter mb-1">
+                                        {post.previous_posts[0].category?.name}
+                                    </span>
+                                    {post.previous_posts[0].title}
+                                </h4>
+                            </Link>
+                        ) : <div />}
 
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {post.previous_posts && post.previous_posts.length > 0 && (
-                        <>
-                            <p style={{ margin: '0 0 5px 0', fontSize: '0.9em', color: '#666' }}>이전 글</p>
-                            {post.previous_posts.map(prev => (
-                                <Link key={prev.id} to={`/posts/${prev.id}`}>
-                                    - {prev.title}
-                                </Link>
-                            ))}
-                        </>
-                    )}
+                        {post.next_posts?.[0] ? (
+                            <Link
+                                to={`/posts/${post.next_posts[0].id}`}
+                                className="group block p-6 bg-zinc-900/40 border-2 border-zinc-800 hover:border-cyan-500/40 rounded-3xl transition-all"
+                            >
+                                <div className="flex justify-between items-center mb-1.5 flex-row-reverse">
+                                    <p className="text-[13px] font-black text-cyan-500 uppercase tracking-widest flex items-center gap-1.5">
+                                        NEXT 
+                                        <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
+                                    </p>
+                                    <span className="text-[10px] font-mono text-zinc-600">
+                                        {new Date(post.next_posts[0].created_at).toLocaleDateString('ko-KR')}
+                                    </span>
+                                </div>
+                                
+                                <h4 className="text-xl font-bold text-zinc-200 group-hover:text-white leading-snug font-['Pretendard']">
+                                    <span className="inline-block align-middle mr-2 px-1.5 py-0.5 bg-zinc-900 border border-zinc-800 text-cyan-400 rounded text-[9px] font-mono uppercase tracking-tighter mb-1">
+                                        {post.next_posts[0].category?.name}
+                                    </span>
+                                    {post.next_posts[0].title}
+                                </h4>
+                            </Link>
+                        ) : <div />}
+                    </nav>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'right' }}>
-                    {post.next_posts && post.next_posts.length > 0 && (
-                        <>
-                            <p style={{ margin: '0 0 5px 0', fontSize: '0.9em', color: '#666' }}>다음 글</p>
-                            {post.next_posts.map(next => (
-                                <Link key={next.id} to={`/posts/${next.id}`}>
-                                    {next.title} -
-                                </Link>
-                            ))}
-                        </>
-                    )}
-                </div>
-            </div>
+            )}
         </div>
     )
 }
