@@ -13,9 +13,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
+DEBUG = env.bool('DEBUG', default=True)
+SECRET_KEY = env('SECRET_KEY')
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG')
+environ.Env.read_env(os.path.join(BASE_DIR, '.env.prod') if not DEBUG else os.path.join(BASE_DIR, '.env'))
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
@@ -66,9 +67,8 @@ DATABASES = {
     'default': env.db(),
 }
 
-if DEBUG:
-    CORS_ALLOWED_ORIGINS = ["http://localhost:5173", "http://127.0.0.1:5173"]
-else:
+if not DEBUG:
+    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
     CORS_ALLOWED_ORIGINS = [
         "https://dezelisoftware.com",
         "https://www.dezelisoftware.com"
@@ -78,6 +78,11 @@ else:
         "https://www.dezelisoftware.com",
     ]
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+else:
+    CORS_ALLOWED_ORIGINS = ["http://localhost:5173", "http://127.0.0.1:5173"]
 
 
 AUTH_PASSWORD_VALIDATORS = [
