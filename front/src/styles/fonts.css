@@ -73,14 +73,14 @@
 
 @font-face {
     font-family: 'NanumBarunPen';
-    src: url('../assets/fonts/NanumBarunpenR.otf') format('opentype'); 
+    src: url('../assets/fonts/NanumBarunpenR.woff2') format('woff2'); 
     font-weight: 400;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'NanumBarunPen';
-    src: url('../assets/fonts/NanumBarunpenB.otf') format('opentype'); 
+    src: url('../assets/fonts/NanumBarunpenB.woff2') format('woff2'); 
     font-weight: 700;
     font-display: swap;
 }
