@@ -24,7 +24,7 @@ class SkillSchema(ModelSchema):
 class CategorySchema(ModelSchema):
     class Meta:
         model = Category
-        fields = ['id', 'name', 'order']
+        fields = ['id', 'name']
 
 class ProfileSchema(ModelSchema):
     skills: List[SkillSchema]
