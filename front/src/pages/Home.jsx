@@ -1,8 +1,8 @@
 // front/src/pages/Home.jsx
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import ReactMarkdown from 'react-markdown'
 import axiosInstance from '../api/axios'
+import MarkdownRenderer from '../components/MarkdownRenderer' // 수정
 
 export default function Home() {
     const [profile, setProfile] = useState(null)
@@ -48,7 +48,6 @@ export default function Home() {
 
                 <div className="flex flex-col gap-8 w-full md:w-3/5 text-center md:text-left">
                     <div className="space-y-6">
-                        {/* 로고와 이름을 세로 중앙 정렬(items-center) // 수정 */}
                         <div className="flex flex-col md:flex-row items-center gap-5"> 
                             {profile.logo_image && (
                                 <img
@@ -57,8 +56,7 @@ export default function Home() {
                                     className="w-24 h-24 rounded-2xl object-contain bg-zinc-900 border-2 border-zinc-700 p-2 shadow-xl shrink-0"
                                 />
                             )}
-                            <div className="flex items-center"> {/* 이름 중앙 정렬을 위한 컨테이너 // 추가 */}
-                                {/* 이름 크기 축소: text-4xl md:text-5xl -> text-3xl md:text-4xl // 수정 */}
+                            <div className="flex items-center">
                                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white font-['NanumBarunPen'] leading-none">
                                     {profile.name}
                                 </h1>
@@ -70,7 +68,6 @@ export default function Home() {
                         </p>
                     </div>
 
-                    {/* 이메일 및 버튼 섹션 (기존 유지) */}
                     <div className="space-y-6">
                         <div className="flex items-center gap-2.5 justify-center md:justify-start">
                             <svg className="w-5 h-5 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -93,11 +90,9 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* 오른쪽 프로필 이미지: 로고 상단과 높이를 맞춤 // 수정 */}
                 <div className="w-full md:w-1/3 shrink-0 flex justify-center md:justify-end">
                     {profile.profile_image && (
-                        /* 로고 보더와 높이를 맞추기 위해 상단 마진 미세 조정 // 추가 */
-                        <div className="relative aspect-square w-full max-w-[280px] rounded-3xl bg-zinc-900 border-2 border-zinc-700 shadow-2xl overflow-hidden md:pt-2"> 
+                        <div className="relative aspect-square w-full max-w-[280px] rounded-3xl bg-zinc-900 border-2 border-zinc-700 shadow-2xl overflow-hidden md:mt-2"> 
                             <img
                                 src={profile.profile_image}
                                 alt={profile.name}
@@ -114,13 +109,9 @@ export default function Home() {
                     <span className="w-2 h-2 rounded-full bg-emerald-400" />
                     <span className="text-lg font-bold text-zinc-400 uppercase tracking-widest">About</span>
                 </div>
-                <div className="pl-6 border-l-2 border-zinc-800
-                        prose prose-invert prose-zinc max-w-none
-                        prose-p:text-zinc-300 prose-p:leading-relaxed prose-p:font-light prose-p:text-lg
-                        prose-headings:font-bold prose-headings:font-['NanumBarunPen'] prose-headings:text-white
-                        prose-a:text-emerald-400 prose-a:no-underline
-                    ">
-                    <ReactMarkdown>{profile.introduction}</ReactMarkdown>
+                {/* 렌더링 방식만 변경 // 수정 */}
+                <div className="pl-6 border-l-2 border-zinc-800 markdown-body"> 
+                    <MarkdownRenderer content={profile.introduction} />
                 </div>
             </section>
 

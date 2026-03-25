@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import axiosInstance from '../api/axios'
+import MarkdownRenderer from '../components/MarkdownRenderer' // 추가
 
 export default function PostDetail() {
     const { id } = useParams()
@@ -71,22 +72,10 @@ export default function PostDetail() {
                 </h1>
             </header>
 
-            <article
-                className="
-                    mt-4 
-                    prose prose-invert prose-zinc max-w-none
-                    prose-headings:font-['NanumBarunPen'] prose-headings:font-bold prose-headings:tracking-tight
-                    prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
-                    prose-p:text-zinc-300 prose-p:leading-[1.7] prose-p:text-lg prose-p:mt-6
-                    prose-strong:text-emerald-400
-                    prose-code:text-cyan-300 prose-code:bg-zinc-900/80 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-lg prose-code:before:content-none prose-code:after:content-none
-                    prose-pre:bg-zinc-900/50 prose-pre:border prose-pre:border-zinc-800 prose-pre:rounded-2xl prose-pre:p-6
-                    prose-blockquote:border-l-cyan-500 prose-blockquote:bg-zinc-900/30 prose-blockquote:italic
-                    prose-img:rounded-3xl prose-img:border-2 prose-img:border-zinc-800
-                    prose-li:text-zinc-300 prose-li:marker:text-emerald-500
-                "
-                dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+            {/* 마크다운 렌더링 영역: dangerouslySetInnerHTML 제거 및 컴포넌트 교체 // 수정 */}
+            <article className="mt-4 markdown-body">
+                <MarkdownRenderer content={post.content} />
+            </article>
 
             {(post.previous_posts?.length > 0 || post.next_posts?.length > 0) && (
                 <div className="pt-12 space-y-8">

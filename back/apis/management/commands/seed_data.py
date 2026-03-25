@@ -1,4 +1,5 @@
-# back/apis/management/commands/seed_data.py
+import os
+import uuid
 from django.core.management.base import BaseCommand
 from django.core.files.uploadedfile import SimpleUploadedFile
 from apis.models import Skill, Profile, Project, Post, Category
@@ -27,24 +28,33 @@ class Command(BaseCommand):
         for name in skill_names:
             skills[name] = Skill.objects.create(name=name)
 
+        # Profile introduction 수정
         profile = Profile.objects.create(
             name='민성',
             slogan='매일매일 성장하려고 애쓰는 백엔드 중심 프론트엔드 가능한 프리랜서 개발자',
             profile_image=dummy_img,
             logo_image=dummy_img,
-            introduction='안녕하세요. 탄탄한 백엔드 아키텍처와 사용자 친화적인 프론트엔드를 고민합니다.',
+            introduction="""# 안녕하세요, 개발자 민성입니다. # 수정
+
+탄탄한 **백엔드 아키텍처**와 사용자 친화적인 **프론트엔드**를 고민합니다. 
+
+### 핵심 역량
+- **Backend**: Django, FastAPI를 활용한 효율적인 API 설계
+- **Frontend**: React, Flutter를 이용한 크로스 플랫폼 개발
+- **Infra**: Docker와 Linux 기반의 홈 서버 운영 및 자동화 배포""",
             contact_email='test@dezelisoftware.com'
         )
         profile.skills.set(list(skills.values()))
 
+        # Project description 수정 (마크다운 적용)
         project_data = [
-            ("이커머스 결제 API 연동", "가상 결제 모듈을 연동한 백엔드 시스템 구축", ['Django', 'PostgreSQL'], date(2025, 1, 15), date(2025, 2, 28)),
-            ("실시간 채팅 웹 애플리케이션", "WebSocket을 활용한 실시간 채팅 서비스", ['FastAPI', 'React'], date(2025, 3, 1), date(2025, 4, 15)),
-            ("개인 포트폴리오 웹사이트", "현재 보시는 바로 이 웹사이트입니다.", ['Django', 'React', 'Nginx'], date(2026, 3, 1), None), # 진행 중
-            ("사내 인트라넷 모바일 앱", "출퇴근 기록 및 연차 관리용 사내 앱", ['React Native', 'Spring Boot'], date(2024, 11, 1), date(2025, 1, 10)),
-            ("자동화 배포 파이프라인 구축", "GitHub Actions를 활용한 서버 자동 배포", ['Docker', 'AWS EC2'], date(2025, 5, 20), date(2025, 6, 5)),
-            ("크롤링 데이터 분석 대시보드", "수집된 공공 데이터를 시각화하는 플랫폼", ['Django', 'PostgreSQL'], date(2025, 8, 1), date(2025, 10, 30)),
-            ("로컬 홈 서버 아키텍처 설계", "클라우드 비용 절감을 위한 홈 서버 네트워크 세팅", ['Ubuntu', 'Nginx', 'Docker'], date(2026, 2, 1), date(2026, 3, 14))
+            ("이커머스 결제 API 연동", "### 주요 구현 사항\n- 가상 결제 모듈 연동\n- **Redis**를 활용한 결제 대기열 처리", ['Django', 'PostgreSQL'], date(2025, 1, 15), date(2025, 2, 28)), # 수정
+            ("실시간 채팅 웹 애플리케이션", "### 기술적 도전\n- **WebSocket** 기반 실시간 통신\n- FastAPI의 비동기 처리 최적화", ['FastAPI', 'React'], date(2025, 3, 1), date(2025, 4, 15)), # 수정
+            ("개인 포트폴리오 웹사이트", "### 프로젝트 개요\n- 현재 보시는 바로 이 웹사이트입니다.\n- **React**와 **Django**의 REST API 연동", ['Django', 'React', 'Nginx'], date(2026, 3, 1), None), # 수정
+            ("사내 인트라넷 모바일 앱", "### 주요 기능\n- 출퇴근 기록 시스템\n- **Spring Security** 기반 권한 관리", ['React Native', 'Spring Boot'], date(2024, 11, 1), date(2025, 1, 10)), # 수정
+            ("자동화 배포 파이프라인 구축", "### CI/CD 인프라\n- GitHub Actions 활용\n- **Docker** 컨테이너 기반 배포 자동화", ['Docker', 'AWS EC2'], date(2025, 5, 20), date(2025, 6, 5)), # 수정
+            ("크롤링 데이터 분석 대시보드", "### 데이터 파이프라인\n- 공공 데이터 수집 및 정제\n- **PostgreSQL** 복합 인덱스 최적화", ['Django', 'PostgreSQL'], date(2025, 8, 1), date(2025, 10, 30)), # 수정
+            ("로컬 홈 서버 아키텍처 설계", "### 인프라 구축\n- 클라우드 비용 절감을 위한 **홈 서버** 네트워크 세팅\n- Cloudflare Tunnel 도입", ['Ubuntu', 'Nginx', 'Docker'], date(2026, 2, 1), date(2026, 3, 14)) # 수정
         ]
 
         for idx, (title, desc, stack_names, s_date, e_date) in enumerate(project_data):
@@ -54,7 +64,7 @@ class Command(BaseCommand):
                 description=desc,
                 start_date=s_date,
                 end_date=e_date,
-                github_url=f"https://github.com/minseong/project-{idx}",
+                github_url=f"[https://github.com/minseong/project-](https://github.com/minseong/project-){idx}",
                 is_public=True,
                 order=idx
             )
@@ -64,16 +74,33 @@ class Command(BaseCommand):
         category_names = ['Backend', 'Frontend', 'DevOps', 'Database', 'Infra', 'Life']
         categories = {}
         for idx, name in enumerate(category_names):
-            categories[name] = Category.objects.create(name=name, order=idx)
+            # Category 모델에 order 필드가 없는 경우를 대비해 name만 사용하거나 모델에 맞춰 수정 필요
+            categories[name] = Category.objects.create(name=name)
 
+        # Post content 수정 (실제 작성한 홈 서버 글 포함)
         post_data = [
-            ("Django N+1 쿼리 최적화 경험기", "Backend", "<p>prefetch_related를 활용하여 DB 호출을 줄인 경험을 공유합니다.</p>"),
-            ("React 컴포넌트 라이프사이클의 이해", "Frontend", "<p>useEffect의 올바른 사용법과 메모리 누수 방지 팁입니다.</p>"),
-            ("Ubuntu 22.04 환경에서 Docker Compose 세팅하기", "DevOps", "<p>가벼운 홈 서버 환경을 구축하는 과정입니다.</p>"),
-            ("PostgreSQL 인덱스 설계 주의점", "Database", "<p>단순 조회가 아닌 복합 필터링 시 B-Tree 인덱스가 작동하는 원리입니다.</p>"),
-            ("FastAPI vs Django Ninja 비교", "Backend", "<p>포트폴리오 규모에 맞는 경량 프레임워크 선택 기준을 다룹니다.</p>"),
-            ("AWS EC2 프리티어 성능 한계 극복하기", "Infra", "<p>Swap 메모리 설정을 통해 t2.micro의 뻗음 현상을 방지합니다.</p>"),
-            ("프리랜서 개발자로서의 첫해 회고", "Life", "<p>매일 성장하기 위해 어떤 루틴을 지켜왔는지 정리해보았습니다.</p>")
+            ("AWS 비용 부담을 해소한 노트북 홈 서버", "DevOps", """개인 개발자에겐 항상 뒤따라오는 고민이 있다. 바로 **'어떻게 하면 비용을 최소화할 것인가'**이다. # 수정
+
+### 1. AWS 프리티어의 한계와 새로운 대안
+처음 선택했던 방법은 누구나 그렇듯 **AWS EC2 프리티어**였다. 하지만 사양의 한계는 명확했다. t3.micro의 빈약한 성능과 12개월이라는 기간 제한은 프로젝트를 장기적으로 운영하기에 제약 사항이 너무 많았다.
+
+### 2. 넘기 힘든 벽: 아파트 네트워크 환경
+가장 먼저 미련 없이 노트북의 OS를 **Ubuntu 22.04**로 밀어버리고 서버 환경 설정을 시작했다. 하지만 곧바로 예상치 못한 난관에 부딪혔다. 바로 한국 아파트 특유의 폐쇄적인 네트워크 환경이었다.
+
+### 3. Cloudflare Tunnel을 통한 네트워크 혁신
+결국 내가 찾아낸 해결책은 **Cloudflare Tunnel**이었다.
+- **포트포워딩 불필요**
+- **보안 강화**
+- **SSL 자동 적용**
+
+```bash
+# Cloudflare Tunnel 실행 예시
+cloudflared tunnel run <TUNNEL_NAME>
+```"""),
+            ("Django N+1 쿼리 최적화 경험기", "Backend", "### N+1 문제 해결\n`prefetch_related`를 활용하여 DB 호출을 줄인 경험을 공유합니다.\n\n```python\nPost.objects.select_related('category').all()\n```"), # 수정
+            ("React 컴포넌트 라이프사이클의 이해", "Frontend", "### useEffect 가이드\n메모리 누수 방지를 위한 **Cleanup** 함수 사용법입니다."), # 수정
+            ("PostgreSQL 인덱스 설계 주의점", "Database", "### 인덱스 원리\n복합 필터링 시 **B-Tree** 인덱스가 작동하는 방식에 대해 다룹니다."), # 수정
+            ("프리랜서 개발자로서의 첫해 회고", "Life", "### 성장 기록\n매일 성장하기 위해 지켜온 루틴과 생각들을 정리했습니다.") # 수정
         ]
 
         for title, cat_name, content in post_data:
@@ -84,4 +111,4 @@ class Command(BaseCommand):
                 is_published=True
             )
 
-        self.stdout.write(self.style.SUCCESS('날짜 데이터가 포함된 더미 데이터 주입이 완벽하게 완료되었습니다!'))
+        self.stdout.write(self.style.SUCCESS('마크다운 데이터가 포함된 더미 데이터 주입이 완료되었습니다!'))

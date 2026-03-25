@@ -1,7 +1,7 @@
-// front/src/pages/ProjectDetail.jsx
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import axiosInstance from '../api/axios'
+import MarkdownRenderer from '../components/MarkdownRenderer' // 추가
 
 export default function ProjectDetail() {
     const { id } = useParams()
@@ -71,10 +71,10 @@ export default function ProjectDetail() {
                 </h1>
             </header>
 
-            {/* 3. 썸네일: 중앙 정렬 수정 // 수정 */}
+            {/* 3. 썸네일 */}
             {project.thumbnail && (
                 <div className="flex justify-center"> 
-                    <div className="max-w-md w-full aspect-video rounded-3xl overflow-hidden border-4 border-cyan-900 bg-zinc-900 shadow-2xl mx-auto"> {/* mx-auto 추가 */}
+                    <div className="max-w-md w-full aspect-video rounded-3xl overflow-hidden border-4 border-cyan-900 bg-zinc-900 shadow-2xl mx-auto">
                         <img 
                             src={project.thumbnail} 
                             alt={project.title} 
@@ -84,12 +84,10 @@ export default function ProjectDetail() {
                 </div>
             )}
 
-            {/* 4. 설명 및 링크 */}
+            {/* 4. 설명 및 링크: 마크다운 렌더러 적용 // 수정 */}
             <article className="space-y-8">
-                <div className="bg-emerald-950/20 border-l-4 border-emerald-500 p-8 rounded-r-2xl">
-                    <p className="text-lg text-zinc-300 leading-relaxed whitespace-pre-line font-medium">
-                        {project.description}
-                    </p>
+                <div className="bg-emerald-950/20 border-l-4 border-emerald-500 p-8 rounded-r-2xl markdown-body">
+                    <MarkdownRenderer content={project.description} />
                 </div>
 
                 {project.github_url && (
@@ -105,7 +103,7 @@ export default function ProjectDetail() {
                 )}
             </article>
 
-            {/* 5. 이전 / 다음 네비게이션: 기술 스택 + 날짜 포함 // 수정 */}
+            {/* 5. 이전 / 다음 네비게이션 */}
             {(project.previous_projects?.length > 0 || project.next_projects?.length > 0) && (
                 <div className="space-y-8">
                     <div className="h-px bg-zinc-800/60" />
