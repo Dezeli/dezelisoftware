@@ -6,16 +6,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    .font-nanum {
-        font-family: 'NanumBarunPen', sans-serif !important;
-    }
-    
-    .font-pretendard {
-        font-family: 'Pretendard', sans-serif !important;
-    }
-}
-
 
 @layer components {
     /* 마크다운 전용 스타일 컴포넌트 */
