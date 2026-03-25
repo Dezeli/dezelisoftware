@@ -13,7 +13,16 @@ export default function ProjectList() {
     const [error, setError] = useState(null)
     const [showFilters, setShowFilters] = useState(false)
 
-    // 날짜 포맷팅 함수 // 추가
+    // 마크다운 기호를 제거하고 순수 텍스트만 남기는 함수 // 추가
+    const stripMarkdown = (md) => {
+        if (!md) return "";
+        return md
+            .replace(/[#*`_~]/g, '') // 헤더, 굵게, 기울임, 코드 기호 제거
+            .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // 링크 텍스트만 남기고 URL 제거
+            .replace(/\n+/g, ' ') // 줄바꿈을 공백으로 대체하여 한 줄로 표시
+            .trim();
+    };
+
     const formatDate = (dateString) => {
         if (!dateString) return null;
         const date = new Date(dateString);
@@ -24,7 +33,7 @@ export default function ProjectList() {
         const fetchSkills = async () => {
             try {
                 const response = await axiosInstance.get('/skills')
-                const data = response.data.data || response.data || response // API 구조에 맞춰 수정
+                const data = response.data.data || response.data || response
                 setSkills(Array.isArray(data) ? data : [])
             } catch (err) {
                 console.error('기술 스택 로딩 실패', err)
@@ -40,7 +49,7 @@ export default function ProjectList() {
                 let url = `/projects?page=${page}`
                 if (selectedSkill) url += `&skill=${selectedSkill}`
                 const response = await axiosInstance.get(url)
-                const resData = response.data.data || response.data || response // API 구조에 맞춰 수정
+                const resData = response.data.data || response.data || response
                 setProjects(resData.items || [])
                 setTotalPages(Math.max(1, Math.ceil((resData.count || 0) / 9)))
             } catch (err) {
@@ -65,7 +74,6 @@ export default function ProjectList() {
 
     return (
         <div className="font-['Pretendard']">
-            {/* 1. 헤더 섹션 */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div className="space-y-2">
                     <div className="flex items-center gap-2">
@@ -101,7 +109,6 @@ export default function ProjectList() {
                 </div>
             </div>
 
-            {/* 2. 필터 목록 */}
             <div className={`flex flex-wrap justify-end gap-2 font-['NanumBarunPen'] pt-4 pb-4 transition-all duration-300
                 ${showFilters 
                     ? 'opacity-100 translate-y-0 visible' 
@@ -123,7 +130,6 @@ export default function ProjectList() {
                 ))}
             </div>
 
-            {/* 3. 프로젝트 리스트 */}
             {loading ? (
                 <div className="flex items-center justify-center py-16">
                     <div className="flex items-center gap-3">
@@ -156,7 +162,6 @@ export default function ProjectList() {
 
                             <div className="absolute -bottom-10 -right-2 w-[94%] bg-emerald-950 border-4 border-emerald-900 p-4 rounded-2xl shadow-xl z-10 transition-all duration-300 ease-out group-hover:-translate-y-4 group-hover:border-emerald-500 backdrop-blur-md">
                                 <div className="flex flex-col px-0.5">
-                                    {/* 작업 기간 표시 섹션 // 추가 */}
                                     <div className="mb-1 flex items-center justify-between">
                                         <span className="text-[9px] font-bold font-mono tracking-tighter text-emerald-500/60 uppercase">
                                             {formatDate(project.start_date)} — {project.end_date ? formatDate(project.end_date) : 'Present'}
@@ -182,7 +187,8 @@ export default function ProjectList() {
 
                                     <div className="max-h-0 opacity-0 overflow-hidden group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500 ease-in-out">
                                         <p className="text-[10px] text-emerald-100/60 font-medium leading-relaxed mt-2 group-hover:text-emerald-50 transition-colors">
-                                            {project.description}
+                                            {/* 마크다운 기호 제거 함수 적용 // 수정 */}
+                                            {stripMarkdown(project.description)} 
                                         </p>
                                     </div>
                                 </div>
@@ -192,7 +198,6 @@ export default function ProjectList() {
                 </div>
             )}
 
-            {/* 4. 페이지네이션 */}
             {!loading && (
                 <div className="flex items-center justify-center gap-2 pt-28 font-['NanumBarunPen']">
                     <button onClick={() => setPage(1)} disabled={page === 1} className="px-3 py-2 bg-zinc-900 border-2 border-zinc-800 text-zinc-400 rounded-xl hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all font-mono">
