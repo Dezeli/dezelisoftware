@@ -139,19 +139,19 @@ export default function ProjectList() {
                     </div>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-20 pt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-28 pt-4">
                     {projects.map(project => (
                         <Link
                             key={project.id}
                             to={`/projects/${project.id}`}
                             className="group relative flex flex-col"
                         >
-                            <div className="relative aspect-[4/3.7] w-full rounded-3xl overflow-hidden border-4 border-cyan-900 bg-zinc-900 z-0 shadow-lg group-hover:border-cyan-500 transition-all duration-300">
+                            <div className="relative aspect-[4/3.7] w-full rounded-3xl overflow-hidden border-4 border-cyan-900 bg-zinc-900 z-0 shadow-lg transition-all duration-300 group-hover:border-cyan-400 group-hover:shadow-[0_0_20px_rgba(34,211,238,0.15)]">
                                 {project.thumbnail ? (
                                     <img
                                         src={project.thumbnail}
                                         alt={project.title}
-                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                                        className="w-full h-full object-cover"
                                     />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center font-['NanumBarunPen'] text-zinc-700 text-xl bg-zinc-950">
@@ -160,7 +160,7 @@ export default function ProjectList() {
                                 )}
                             </div>
 
-                            <div className="absolute -bottom-10 -right-2 w-[94%] bg-emerald-950 border-4 border-emerald-900 p-4 rounded-2xl shadow-xl z-10 transition-all duration-300 ease-out group-hover:-translate-y-4 group-hover:border-emerald-500 backdrop-blur-md">
+                            <div className="absolute -bottom-12 -right-2 w-[94%] bg-emerald-950 border-4 border-emerald-900 px-4 py-3 rounded-2xl shadow-xl z-10 transition-all duration-300 ease-out group-hover:border-emerald-400 group-hover:bg-emerald-900/70 group-hover:shadow-[0_0_24px_rgba(52,211,153,0.18)] backdrop-blur-md">
                                 <div className="flex flex-col px-0.5">
                                     <div className="mb-1 flex items-center justify-between">
                                         <span className="text-[9px] font-bold font-mono tracking-tighter text-emerald-500/60 uppercase">
@@ -171,25 +171,18 @@ export default function ProjectList() {
                                         )}
                                     </div>
 
-                                    <div className="mb-2">
-                                        <h3 className="text-base md:text-lg font-semibold text-white font-['Pretendard'] leading-tight tracking-tight">
+                                    <div className="mb-2 min-h-[2.75rem] md:min-h-[3rem] flex items-center">
+                                        <h3 className="text-base md:text-lg font-semibold text-white group-hover:text-emerald-300 font-['Pretendard'] leading-tight tracking-tight transition-colors duration-300 line-clamp-2">
                                             {project.title}
                                         </h3>
                                     </div>
-                                    
-                                    <div className="flex flex-wrap gap-1 mb-1">
+
+                                    <div className="flex flex-wrap gap-1">
                                         {project.tech_stacks?.slice(0, 3).map(stack => (
                                             <span key={stack.id} className="px-1.5 py-0.5 bg-zinc-950 border border-emerald-900/40 text-emerald-400/80 rounded text-[9px] font-mono font-bold">
                                                 {stack.name}
                                             </span>
                                         ))}
-                                    </div>
-
-                                    <div className="max-h-0 opacity-0 overflow-hidden group-hover:max-h-24 group-hover:opacity-100 transition-all duration-500 ease-in-out">
-                                        <p className="text-[10px] text-emerald-100/60 font-medium leading-relaxed mt-2 group-hover:text-emerald-50 transition-colors">
-                                            {/* 마크다운 기호 제거 함수 적용 // 수정 */}
-                                            {stripMarkdown(project.description)} 
-                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -199,7 +192,7 @@ export default function ProjectList() {
             )}
 
             {!loading && (
-                <div className="flex items-center justify-center gap-2 pt-28 font-['NanumBarunPen']">
+                <div className="flex items-center justify-center gap-2 pt-20 font-['NanumBarunPen']">
                     <button onClick={() => setPage(1)} disabled={page === 1} className="px-3 py-2 bg-zinc-900 border-2 border-zinc-800 text-zinc-400 rounded-xl hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all font-mono">
                         «
                     </button>

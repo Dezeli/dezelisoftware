@@ -46,7 +46,7 @@ export default function ProjectDetail() {
     if (error || !project) return <div className="text-center py-40 text-red-400 font-mono font-['Pretendard']">{error || '데이터 없음'}</div>
 
     return (
-        <div className="max-w-2xl mx-auto space-y-12 font-['Pretendard']">
+        <div className="w-full space-y-8 font-['Pretendard']">
             {/* 1. 상단 네비게이션 */}
             <button onClick={() => navigate('/projects')} className="flex items-center gap-2 text-xs font-bold text-zinc-500 hover:text-emerald-400 transition-all font-mono group uppercase tracking-widest">
                 <span className="group-hover:-translate-x-1 transition-transform">←</span> Back to Project
@@ -60,7 +60,7 @@ export default function ProjectDetail() {
                     </span>
                     <div className="flex flex-wrap gap-1">
                         {project.tech_stacks?.map(stack => (
-                            <span key={stack.id} className="px-1.5 py-0.5 bg-zinc-900 border border-zinc-800 text-zinc-500 rounded text-[9px] font-mono">
+                            <span key={stack.id} className="px-1.5 py-0.5 bg-emerald-950 border border-emerald-800/60 text-emerald-400 rounded text-[9px] font-mono font-bold">
                                 {stack.name}
                             </span>
                         ))}
@@ -73,20 +73,18 @@ export default function ProjectDetail() {
 
             {/* 3. 썸네일 */}
             {project.thumbnail && (
-                <div className="flex justify-center"> 
-                    <div className="max-w-md w-full aspect-video rounded-3xl overflow-hidden border-4 border-cyan-900 bg-zinc-900 shadow-2xl mx-auto">
-                        <img 
-                            src={project.thumbnail} 
-                            alt={project.title} 
-                            className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" 
-                        />
-                    </div>
+                <div className="w-full aspect-video rounded-3xl overflow-hidden bg-zinc-900 shadow-2xl">
+                    <img
+                        src={project.thumbnail}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                    />
                 </div>
             )}
 
             {/* 4. 설명 및 링크: 마크다운 렌더러 적용 // 수정 */}
             <article className="space-y-8">
-                <div className="bg-emerald-950/20 border-l-4 border-emerald-500 p-8 rounded-r-2xl markdown-body">
+                <div className="markdown-body px-2">
                     <MarkdownRenderer content={project.description} />
                 </div>
 

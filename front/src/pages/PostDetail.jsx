@@ -47,7 +47,7 @@ export default function PostDetail() {
     if (!post) return null
 
     return (
-        <div className="max-w-2xl mx-auto space-y-12 font-['Pretendard']">
+        <div className="w-full space-y-12 font-['Pretendard']">
 
             <button
                 onClick={() => navigate('/posts')}
