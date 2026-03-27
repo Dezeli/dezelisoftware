@@ -8,8 +8,8 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Nunito', 'sans-serif'],
-                mono: ['JetBrains Mono', 'monospace'],
+                nanum: ['NanumBarunPen', 'sans-serif'],
+                pretendard: ['Pretendard', 'sans-serif'],
             },
         },
     },

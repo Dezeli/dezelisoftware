@@ -80,11 +80,11 @@ export default function Home() {
                         </div>
 
                         <div className="flex flex-wrap gap-4 justify-center md:justify-start font-['NanumBarunPen']">
-                            <Link to="/projects" className="px-7 py-3 bg-zinc-900 border border-zinc-800 text-zinc-200 font-bold rounded-2xl hover:bg-emerald-500/10 transition-all duration-300">
-                                Projects →
+                            <Link to="/projects" className="group px-7 py-3 bg-zinc-900 border-2 border-zinc-800 text-zinc-300 font-bold rounded-2xl hover:bg-emerald-500/25 hover:text-emerald-200 transition-all duration-300">
+                                Projects <span className="inline-block group-hover:translate-x-1 transition-transform duration-300">→</span>
                             </Link>
-                            <Link to="/posts" className="px-7 py-3 bg-zinc-900 border border-zinc-800 text-zinc-200 font-bold rounded-2xl hover:bg-emerald-500/10 transition-all duration-300">
-                                Blog →
+                            <Link to="/posts" className="group px-7 py-3 bg-zinc-900 border-2 border-zinc-800 text-zinc-300 font-bold rounded-2xl hover:bg-cyan-500/25 hover:text-cyan-200 transition-all duration-300">
+                                Blog <span className="inline-block group-hover:translate-x-1 transition-transform duration-300">→</span>
                             </Link>
                         </div>
                     </div>
@@ -105,7 +105,7 @@ export default function Home() {
             </section>
 
             <section className="font-['Pretendard']">
-                <div className="flex items-center gap-3 mb-8 font-['NanumBarunPen']">
+                <div className="flex items-center gap-3 mb-4 font-['NanumBarunPen']">
                     <span className="w-2 h-2 rounded-full bg-emerald-400" />
                     <span className="text-lg font-bold text-zinc-400 uppercase tracking-widest">About</span>
                 </div>
@@ -116,17 +116,17 @@ export default function Home() {
             </section>
 
             <section>
-                <div className="flex items-center gap-3 mb-8 font-['NanumBarunPen']">
+                <div className="flex items-center gap-3 mb-4 font-['NanumBarunPen']">
                     <span className="w-2 h-2 rounded-full bg-cyan-400" />
                     <span className="text-lg font-bold text-zinc-400 uppercase tracking-widest">Tech Stack</span>
                 </div>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2">
                     {profile.skills?.map((skill) => (
                         <span
                             key={skill.id}
-                            className="px-5 py-2.5 bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-full text-base font-medium transition-all duration-300"
+                            className="px-3 py-1.5 bg-zinc-800 text-zinc-200 rounded-md text-sm font-mono font-medium"
                         >
-                            {skill.name}
+                            # {skill.name}
                         </span>
                     ))}
                 </div>

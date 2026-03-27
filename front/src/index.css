@@ -6,6 +6,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer components {
     /* 마크다운 전용 스타일 컴포넌트 */
     .markdown-body {
