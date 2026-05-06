@@ -8,14 +8,6 @@ end_date: "2024-02-02"
 thumbnail: ""
 ---
 
-# SpotDifference - 틀린그림찾기 게임
-
-**기간**: 2023-12-11 ~ 2024-02-02
-
-**기술 스택**: Python Tkinter, Pygame, Pillow
-
-**GitHub**: [Dezeli/SpotDifference](https://github.com/Dezeli/SpotDifference)
-
 ### 개요
 
 친구 생일 선물용으로 만든 Tkinter 기반 틀린그림찾기 게임이다. 25라운드 구조에 라운드별 원본/변경본 이미지 두 장을 비교하는 방식이다.

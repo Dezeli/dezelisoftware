@@ -8,14 +8,6 @@ end_date: "2020-12-31"
 thumbnail: ""
 ---
 
-# ToDoList - Django 할 일 메모 웹사이트
-
-**기간**: 2020-09-01 ~ 2020-12-31
-
-**기술 스택**: Python Django, Sqlite3, HTML, CSS
-
-**GitHub**: [Dezeli/ToDoList](https://github.com/Dezeli/ToDoList)
-
 ### 개요
 
 Django로 만든 할 일 메모 웹사이트. **첫 웹 프로젝트**다. Django 공식 튜토리얼을 따라가며 연습하는 과정에서 만든 결과물로, 할 일의 추가·조회·수정·삭제(CRUD) 기능을 갖췄다. 로컬에서 `py manage.py runserver`로 띄워 사용하는 형태이며 배포는 하지 않았다.

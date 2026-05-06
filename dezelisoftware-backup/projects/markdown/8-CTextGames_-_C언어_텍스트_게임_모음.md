@@ -8,14 +8,6 @@ end_date: "2024-02-02"
 thumbnail: ""
 ---
 
-# CTextGames - C언어 텍스트 게임 모음
-
-**기간**: 2017-01-01 ~ 2024-02-02
-
-**기술 스택**: C, Python Tkinter, Sqlite3
-
-**GitHub**: [Dezeli/CTextGames](https://github.com/Dezeli/CTextGames)
-
 ### 개요
 
 **첫 프로젝트**다. 2017년 중학교 코딩 동아리 축제 출품작으로 만든 C언어 텍스트 게임 두 편(서바이벌 블랙잭 / 프로그램 강화 게임)과, 2024년에 첫 게임을 Python Tkinter로 다시 만든 **블랙잭 2.0.0**까지 한 레포에 묶여 있다.

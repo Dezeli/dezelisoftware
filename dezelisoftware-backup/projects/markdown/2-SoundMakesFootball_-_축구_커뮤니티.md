@@ -8,17 +8,6 @@ end_date: "2021-06-30"
 thumbnail: "https://dezelisoftware.com/media/profile/%25Y/%25m/c63c8a8e-665c-4ec7-aab4-7d9e56d6dbe3.png"
 ---
 
-# SoundMakesFootball - 축구 커뮤니티
-
-**기간**: 2021-01-01 ~ 2021-06-30
-
-**기술 스택**: Django, Sqlite3, Heroku
-
-### HTML/CSS에서 Django로, 한 걸음 더
-
-그때까지 내가 아는 웹이란 HTML과 CSS가 전부였다. 정적인 페이지를 그리는 것 말고는 할 수 있는 게 없었다. 그걸 넘어서고 싶어서 선택한 게 Django였다. 축구를 좋아하다 보니 주제는 자연스럽게 정해졌고, 그렇게 'LiveSoccerCenter'가 시작됐다.
-
-
 ### 기술 스택
 
 - **Language**: Python

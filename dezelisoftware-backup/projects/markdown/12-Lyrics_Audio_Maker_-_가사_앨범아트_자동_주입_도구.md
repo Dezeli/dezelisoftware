@@ -8,14 +8,6 @@ end_date: "2026-03-06"
 thumbnail: ""
 ---
 
-# Lyrics Audio Maker - 가사·앨범아트 자동 주입 MP3 메이커
-
-**기간**: 2023-12-11 ~ 2026-03-06
-
-**기술 스택**: Python, BeautifulSoup, yt-dlp, mutagen, FFmpeg
-
-**GitHub**: [Dezeli/Lyrics_Audio_Maker](https://github.com/Dezeli/Lyrics_Audio_Maker)
-
 ### 개요
 
 가수명 하나만 입력하면 벅스 인기곡 목록을 추출하고, 유튜브에서 음원을 받아 **MP3 파일에 가사와 앨범아트를 자동으로 주입**하는 개인용 라이브러리 구축 도구다. 음악 스트리밍을 구독하지 않으면서도 가사가 박힌 음악 라이브러리를 갖고 싶다는 개인적 필요에서 출발했고, 외부에 공개·배포한 적은 없는 **순수 개인용 자동화 도구**다.

@@ -8,14 +8,6 @@ end_date: "2020-06-30"
 thumbnail: ""
 ---
 
-# CatchingMoles - 두더지잡기 게임
-
-**기간**: 2020-01-01 ~ 2020-06-30
-
-**기술 스택**: Python Tkinter, Sqlite3
-
-**GitHub**: [Dezeli/CatchingMoles](https://github.com/Dezeli/CatchingMoles)
-
 ### 개요
 
 Python Tkinter로 만든 두더지잡기 게임이다. 9마리의 두더지가 임의로 튀어나오면 1분 동안 클릭해 점수를 쌓고, 종료 후 결과를 SQLite3 점수판에 저장한다. **첫 Tkinter GUI 게임**이다.
