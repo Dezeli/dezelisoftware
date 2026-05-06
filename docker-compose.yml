@@ -5,6 +5,7 @@ services:
     db:
         image: postgres:15-alpine
         container_name: dezelisoftware_db
+        restart: unless-stopped
         volumes:
             - postgres_data:/var/lib/postgresql/data
         environment:
@@ -17,6 +18,7 @@ services:
     backend:
         build: ./back
         container_name: dezelisoftware_api
+        restart: unless-stopped
         env_file:
             - back/.env.prod
         volumes:
@@ -34,6 +36,7 @@ services:
     nginx:
         build: ./front
         container_name: dezelisoftware_web
+        restart: unless-stopped
         ports:
             - "80:80"
         volumes:
