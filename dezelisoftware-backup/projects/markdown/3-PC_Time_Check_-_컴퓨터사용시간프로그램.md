@@ -8,16 +8,6 @@ end_date: "2021-06-30"
 thumbnail: "https://dezelisoftware.com/media/profile/%25Y/%25m/27fc9ffd-fda0-4230-ae53-5a3b8f55bac0.PNG"
 ---
 
-# PC Time Check - 컴퓨터사용시간프로그램
-
-**기간**: 2021-01-01 ~ 2021-06-30
-
-**기술 스택**: Sqlite3, Python Tkinter
-
-### 필요하니까 만든다 — 내 PC 사용시간이 궁금했다
-
-단순한 궁금증에서 시작됐다. 하루에 컴퓨터를 얼마나 쓰는지 알고 싶었다. 딱히 쓸만한 도구를 찾기보다, 직접 만들어보기로 했다. 그렇게 'PcTimeCheck'가 시작됐다.
-
 ### 기술 스택
 
 - **Language**: Python

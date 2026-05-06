@@ -8,14 +8,6 @@ end_date: "2020-12-31"
 thumbnail: "https://dezelisoftware.com/media/profile/%25Y/%25m/ccc98946-bf5e-4884-bb1e-fc1b9d7eaaec.png"
 ---
 
-# Football Owner - 축구 시뮬레이터
-
-**기간**: 2020-07-01 ~ 2020-12-31
-
-**기술 스택**: Sqlite3, Python Tkinter
-
-파이썬 Tkinter와 SQLite3를 활용한 2020년 나만의 축구 시뮬레이터
-
 ### FM을 따라 하되, 나만의 색깔을 담다
 Football Manager 게임(FM)을 너무 좋아해서 시작한 프로젝트다. 하지만 똑같이 따라 하는 건 의미가 없다고 생각해서 'FootballOwner'라는 이름을 붙였다. 2020년, 개발 초창기 시절에 한 작업이라 지금 보면 풋풋하지만, 당시에는 구단주로서 팀을 운영하는 핵심 로직을 구현하는 데 모든 열정을 쏟았다.
 

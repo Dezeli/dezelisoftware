@@ -8,14 +8,6 @@ end_date: "2025-12-30"
 thumbnail: ""
 ---
 
-# BOJ - 백준 알고리즘 풀이 아카이브
-
-**기간**: 2023-08-23 ~ 2025-12-30
-
-**기술 스택**: Python, C++17, Ada, Algol68, Fortran, FreeBasic, GolfScript, VisualBasic, 아희, Text
-
-**GitHub**: [Dezeli/BOJ](https://github.com/Dezeli/BOJ)
-
 ### 1,448문제가 쌓인 자리
 
 블로그에는 [백준이 문을 닫았다]는 글을 따로 남겼다. 그 글이 백준이라는 공간에 대한 작별이라면, 이 레포는 그 풀이들이 실제로 쌓여 있는 자리다.

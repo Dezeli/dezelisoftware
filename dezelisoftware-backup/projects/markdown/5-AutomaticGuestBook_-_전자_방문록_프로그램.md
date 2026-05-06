@@ -8,14 +8,6 @@ end_date: "2020-06-30"
 thumbnail: ""
 ---
 
-# AutomaticGuestBook - 전자 방문록 프로그램
-
-**기간**: 2020-01-01 ~ 2020-06-30
-
-**기술 스택**: Arduino, Python Tkinter, Sqlite3
-
-**GitHub**: [Dezeli/AutomaticGuestBook](https://github.com/Dezeli/AutomaticGuestBook)
-
 ### 카드만 갖다 대면 끝나는 방문록
 
 2020년 상반기, 코로나가 일상을 본격적으로 흔들기 시작하던 시기였다. 가게나 시설 입구마다 종이 방문록이 놓이고, 한쪽에서는 그걸 디지털로 바꾸려는 시도들이 막 보이던 무렵이었다. 학교 프로젝트의 주제로 그 흐름을 골랐다.

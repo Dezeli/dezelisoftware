@@ -8,14 +8,6 @@ end_date: "2021-06-30"
 thumbnail: ""
 ---
 
-# FindHealthyRaccoon - 건강한 너구리 찾기 게임
-
-**기간**: 2021-01-01 ~ 2021-06-30
-
-**기술 스택**: Python Django, JavaScript, Sqlite3, HTML, CSS
-
-**GitHub**: [Dezeli/FindHealthyRaccoon](https://github.com/Dezeli/FindHealthyRaccoon)
-
 ### 개요
 
 3마리 너구리 중 가장 건강한 너구리를 고르는 웹 게임. **첫 JavaScript 중심 웹 게임**이다. 게임 로직 전체는 프론트엔드(`main.js`)에 들어 있고, Django 백엔드는 점수 저장과 랭킹 조회만 담당한다. Ajax로 둘을 잇는 구조이며, 로컬에서 `py manage.py runserver`로 실행한다 (배포는 하지 않음).

@@ -8,14 +8,6 @@ end_date: "2021-06-30"
 thumbnail: ""
 ---
 
-# WordVoca - 영어 단어장
-
-**기간**: 2021-01-01 ~ 2021-06-30
-
-**기술 스택**: Python Tkinter, Sqlite3, gTTS
-
-**GitHub**: [Dezeli/WordVoca](https://github.com/Dezeli/WordVoca)
-
 ### 영어 공부용으로 만든 듣는 단어장
 
 내 영어 공부에 쓰려고 만든, 단어를 음성으로 반복 재생해 주는 단어장이다.
